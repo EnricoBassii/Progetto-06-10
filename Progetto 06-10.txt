@@ -1,0 +1,23 @@
+Il codice crea un programma che consentirebbe (tolti gli errori interni al codice stesso) all' utente di eseguire tre operazioni differenti: moltiplicare due numeri, dividere due numeri ed inserire una stringa di massimo 10 caratteri.
+
+Dal codice del programma, possiamo notare come il programma non sarà in grado di gestire input diversi inseriti dall' utente rispetto a quelli contemplati nel codice. Un' altra casistica anomala all' interno del codice è nella funzione ins_string. L' array "stringa" è stato impostato con una massima dimensione di 10 caratteri ma il programma non controlla se l' utente scrive un numero maggiore di 10 caratteri. Questo può potenzialmente portare a una condizione di overflow e quindi a problemi per la sicurezza della macchina.
+Il codice non prevede poi un menù di uscita dal programma una volta che l' utente ha terminato di utilizzarlo. L' unica opzione possibile sarebbe quella di forzarne la chiusura senza seguire una "procedura".
+Il codice, nonostante preveda l' inserimento da parte dell' utente sia di numeri interi sia di numeri decimali, sembra non riuscire a gestire correttamente il caso in cui l' utente inserisca un numero intero piuttosto che un decimale. Queste sono le casistiche che potrebbero portar anomalie nell' esecuzione del programma che ho individuato all' interno del codice.
+
+Gli errori di sintassi nel codice sono diversi, li elencherò di seguito:
+
+- char scelta = {'\O'}; l' errore qui è nelle parentesi {}, per la variabile char era sufficiente scrivere il codice nel modo seguente: char scelta = '\O\;
+
+- scanf("%d, &scelta); qui l' errore è che il programma cercherà di leggere un numero intero rappresentato dalla specifica di formato %d all' interno di una variabile di tipo "char". Perchè il programma prendesse e potesse leggere un carattere bisognava scrivere la specifica di formato "%c".
+
+- scanf("%s", &stringa); con le stringhe non serve utilizzare l' operatore &, era sufficiente scrivere scanf("%s, stringa);
+
+- short int a, b = 0; nelle linea di codice dedicata alla moltiplicazione, è stato inizializzato solo "b" e non "a". Bisogna inizializzare entrambi le variabili, un esempio corretto di codice è short int a = 0, b = 0; la stessa cosa è stata fatta con la divisione, solo che lì era dichiarato solo come int e non short int.
+
+- sempre all' interno della parte di codice relativa alla moltiplicazione e alla divisione, ci sono due errori all' interno delle funzioni "Printf" e "Scanf". Nel primo caso le variabili sono short int, bisogna quindi utilizzare %hd. Stesso problema si presenta in scanf, dove le variabili a e b sono dichiarate come short int e devono quindi essere lette con %hd e non %d.
+
+- per come sono state scritte le ultime linee di codice relative alla stringa, il programma leggerà solo la prima parola fino allo spazio. Ciò significa che se l' utente scriverà "Sono Enrico", il programma leggerà solo "Sono". Per ovviare a questo errore bisogna inserire la stringa "fgets", grazie alla quale il programma leggerà tutto il testo inserito, spazi compresi.
+
+- il codice non presenta all' utente la possibilità di eseguire più operazioni alla volta senza che, terminata la prima, debba necessariamente uscire e riavviare il programma stesso. Per ovviare a questo problema basta inserire un ciclo "while" che permette all' utente di continuare ad eseguire operazioni finchè non deciderà di chiudere inserendo il carattere selezionato all' interno del codice "B, oppure N, o qualsiasi altro il programmatore voglia inserire come input per l'utente"
+
+- la parte di codice relativa alla divisione presenta un errore di sintassi. int divisione = a % b; è infatti sbagliato, perchè in questo modo il programma restituisce il resto del risultato della divisione tra due numeri. L' operatore corretto per la divisione è /, il codice giusto è quindi int divisione = a / b;
